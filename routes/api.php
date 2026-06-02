@@ -1,6 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\DashboardController;
 
-Route::post('/sensor', [ApiController::class, 'store']);
+Route::post('/sensor', [DashboardController::class, 'storeSensor']);

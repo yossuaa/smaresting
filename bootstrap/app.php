@@ -11,8 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         api: __DIR__ . '/../routes/api.php',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    ->withMiddleware(function ($middleware) {
+        $middleware->alias([
+            'checklogin' => \App\Http\Middleware\CheckLogin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
