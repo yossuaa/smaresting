@@ -451,7 +451,7 @@ async function loadData() {
 }
 initCharts();
 loadData();
-setInterval(loadData, 3000);
+setInterval(loadData, 500);
 </script>
 </body>
 </html>
