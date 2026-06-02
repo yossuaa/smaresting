@@ -211,10 +211,11 @@
                 </div>
             </div>
 
+            @if(session('user_name') == 'kelompoksatu')
             @php
-    $control = \App\Models\SystemControl::first();
-    $loggingStatus = $control->data_logging_status ?? 'RUNNING';
-@endphp
+                $control = \App\Models\SystemControl::first();
+                $loggingStatus = $control->data_logging_status ?? 'RUNNING';
+            @endphp
 
 <div class="col-span-1 lg:col-span-1 lg:col-span-1 lg:col-span-2 theme-card rounded-[34px] p-8 border border-yellow-500/40 hover:border-yellow-500/70 transition-all duration-300">
 
@@ -305,7 +306,7 @@
                     </button>
                 </form>
             </div>
-
+            @endif
             <!-- KEAMANAN -->
             <div class="col-span-1 lg:col-span-1 lg:col-span-1 lg:col-span-2 relative overflow-hidden bg-emerald-500 rounded-[34px] p-8 text-white shadow-xl shadow-emerald-500/20">
                 <div class="absolute -top-20 -right-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>

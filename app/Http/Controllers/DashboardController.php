@@ -8,6 +8,7 @@ use App\Models\SystemControl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -129,17 +130,29 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function resetDataSensor()
     {
+        if (session('user_name') !== 'kelompoksatu') {
+            return redirect('/settings')
+                ->with('error', 'Hanya akun kelompoksatu yang dapat mereset data.');
+        }
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         SensorData::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        return redirect('/settings')->with('success', 'Semua data sensor berhasil direset.');
+        return redirect('/settings')
+            ->with('success', 'Semua data sensor berhasil direset.');
     }
 
     public function toggleDataLogging()
     {
+        if (session('user_name') !== 'kelompoksatu') {
+            return redirect('/settings')
+                ->with('error', 'Hanya akun kelompoksatu yang dapat mengubah logging.');
+        }
+
         $control = SystemControl::where('id', 1)->first();
 
         if (!$control) {
