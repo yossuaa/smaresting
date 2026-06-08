@@ -42,7 +42,7 @@
 <div class="relative z-10 flex min-h-screen">
     @include('sidebar')
 
-    <main class="lg:ml-[300px] ml-0 flex-1 p-4 lg:p-8">
+    <main class="lg:ml-[300px] flex-1 p-4 lg:p-8 pt-20 lg:pt-8">
 
         <div class="theme-card backdrop-blur-xl rounded-[34px] p-8 shadow-xl shadow-emerald-500/5">
             <div class="inline-flex items-center gap-3 theme-soft border px-5 py-2 rounded-full text-[17px] font-semibold mb-4">
@@ -330,7 +330,7 @@ function exportCSV(){
 }
 
 loadSensor();
-setInterval(loadSensor, 2000);
+setInterval(loadSensor, 500);
 </script>
 
 </body>

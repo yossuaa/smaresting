@@ -598,7 +598,7 @@ async function loadAnalytics(){
 
 initCharts();
 loadAnalytics();
-setInterval(loadAnalytics, 2000);
+setInterval(loadAnalytics, 500);
 </script>
 
 </body>
