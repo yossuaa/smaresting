@@ -161,6 +161,7 @@
         </div>
     </main>
 </div>
+@vite(['resources/js/app.js'])
 <script>
 const ESP_TIMEOUT_SECONDS = 15;
 let chartCahaya;
@@ -450,8 +451,55 @@ async function loadData() {
     await loadChartKeseluruhan();
 }
 initCharts();
+
+loadChartKeseluruhan();
+setInterval(loadChartKeseluruhan, 10000);
+
 loadData();
-setInterval(loadData, 500);
+
+function startRealtime() {
+
+    console.log('Echo cek:', window.Echo);
+
+    if (!window.Echo) {
+        console.log('Echo belum siap...');
+        setTimeout(startRealtime, 1000);
+        return;
+    }
+
+    console.log('Realtime aktif');
+
+ window.Echo.channel('sensor')
+    .listen('.sensor.updated', (e) => {
+
+        console.log('Realtime masuk:', e.sensor);
+
+        const latest = e.sensor;
+        const status = latest.status_lampu;
+
+        document.getElementById('lastLux').innerText = latest.cahaya;
+        document.getElementById('modeAktif').innerText = latest.mode;
+        document.getElementById('lastUpdate').innerText = latest.waktu;
+
+        document.getElementById('kondisiCard').className = kondisiCardColor(status);
+        document.getElementById('kondisiSistem').innerText = statusText(status);
+        document.getElementById('kondisiDetail').innerText =
+            `${kondisiCahaya(latest.cahaya)} • ${gerakanLabel(latest.gerakan)} GERAKAN • ${latest.mode}`;
+
+        document.getElementById('lampuTerang').innerText =
+            status === 'ON-Terang' ? 4 : 0;
+
+        document.getElementById('lampuRedup').innerText =
+            status === 'ON-Redup' ? 4 : 0;
+
+        document.getElementById('gerakanCount').innerText =
+            latest.gerakan == 1 || latest.gerakan === 'ADA' ? 1 : 0;
+
+        loadData();
+    });
+}
+
+startRealtime();
 </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Events\SensorUpdated;
 
 class DashboardController extends Controller
 {
@@ -110,7 +111,7 @@ class DashboardController extends Controller
             }
         }
 
-        SensorData::create([
+        $sensor = SensorData::create([
             'lampu_id' => $request->lampu_id ?? 1,
             'user_id' => $request->user_id ?? 1,
             'cahaya' => $request->cahaya,
@@ -122,6 +123,8 @@ class DashboardController extends Controller
             'durasi' => $durasi,
             'waktu' => $sekarang,
         ]);
+
+        broadcast(new SensorUpdated($sensor));
 
         return response()->json([
             'success' => true,
